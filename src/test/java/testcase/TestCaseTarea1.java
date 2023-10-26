@@ -20,7 +20,7 @@ public class TestCaseTarea1 {
     @BeforeEach
     public void preCondiciones(){
         //String ruta del driver
-        String rutaDriver = "D:\\Java\\CursoSelenium\\EjerciciosSelenium1\\src\\test\\resources\\driver\\chromedriver.exe";
+        String rutaDriver = "D:\\QA\\_CAPACITACION_BANCO\\Java\\SeleniumTarea1\\src\\test\\resources\\driver\\chromedriver.exe";
 
         //Enlazar el driver como property de windows para el manejo
         //Del navegador
