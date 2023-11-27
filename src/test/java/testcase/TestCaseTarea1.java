@@ -8,7 +8,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import sun.security.x509.OtherName;
+
 
 import java.nio.charset.StandardCharsets;
 
@@ -20,7 +20,7 @@ public class TestCaseTarea1 {
     @BeforeEach
     public void preCondiciones(){
         //String ruta del driver
-        String rutaDriver = "D:\\QA\\_CAPACITACION_BANCO\\Java\\SeleniumTarea1\\src\\test\\resources\\driver\\chromedriver.exe";
+        String rutaDriver = "D:\\Java\\CursoSelenium\\EjerciciosSelenium1\\src\\test\\resources\\driver\\chromedriver.exe";
 
         //Enlazar el driver como property de windows para el manejo
         //Del navegador
@@ -38,7 +38,7 @@ public class TestCaseTarea1 {
         //pos condicion
       //  driver.quit();
     }
-
+/*
     @Test
     void ingresoClienteExistente() throws InterruptedException {
 
@@ -74,9 +74,46 @@ public class TestCaseTarea1 {
         Assertions.assertEquals(resultadoEsperado,resultadoActual);
 
     }
+    @Test
+    void ingresoClienteExistenteFuncionario() throws InterruptedException {
+
+        WebElement btnPortate = driver.findElement(By.id("hi_header_login_a"));
+        WebElement btnHazteCliente = driver.findElement(By.id("header_hazte_cliente_banco"));
+
+        btnPortate.click();
+        if (btnHazteCliente.isDisplayed())
+            btnHazteCliente.click();
+
+        WebElement txtIngresoRut = driver.findElement(By.name("rut"));
+        txtIngresoRut.sendKeys("12646609-9");
+        Thread.sleep(2000); //ESPERA 3 SEGUNDOS
+        driver.findElement(By.id("nacionalidadChileno")).click();
+        driver.findElement(By.id("otraNacionalidadNo" )).click();
+        driver.findElement(By.name("email")).sendKeys("t@mail.cl");
+        driver.findElement(By.name("celular")).sendKeys("999999999");
+        driver.findElement(By.xpath("//cns-button[@label='Continuar']")).click();
+        Thread.sleep(2000); //ESPERA 3 SEGUNDOS
 
 
+        WebElement btnIrConsorcio = driver.findElement(By.xpath("//cns-button[@label='Ir a Consorcio.cl']"));
+        String resultadoActual = corregirFormatoTexto(driver.findElement(By.className("title")).getText());
+        String resultadoEsperado = "¡Eres funcionario de Consorcio!";
 
+        if(resultadoEsperado == resultadoActual){
+            // System.out.println("existe boton");
+            btnIrConsorcio.click();
+
+            //<div data-v-992f5938="" class="title">¡Eres funcionario de Consorcio!</div>
+
+
+        }
+
+
+        Assertions.assertEquals(resultadoEsperado,resultadoActual);
+
+    }
+
+*/
     @Test
     void validaActivacionBoton() throws InterruptedException {
 // ingreso a pagina principal de sitio consorcio
@@ -87,24 +124,31 @@ public class TestCaseTarea1 {
         if (btnHazteCliente.isDisplayed())
             btnHazteCliente.click();
 // en página siguiente, valida que botón está deshabilitado.
-        boolean resultadoActual = false;
-        boolean resultadoEsperado = false;
+        boolean resultadoActual;
+        boolean resultadoEsperado = true;
 
-        WebElement btnContinuar = driver.findElement(By.tagName("cns-button"));
+        WebElement btnContinuar = driver.findElement(By.id("step1_btn"));
         WebElement txtIngresoRut = driver.findElement(By.name("rut"));
-        resultadoActual =btnContinuar.isEnabled();
-        if (!btnContinuar.isEnabled()) {  txtIngresoRut.sendKeys("12646609-9"); } else  {resultadoActual= true; }
-        if (!btnContinuar.isEnabled()) {  driver.findElement(By.id("nacionalidadChileno")).click();} else  {resultadoActual= true; }
-        if (!btnContinuar.isEnabled()) {   driver.findElement(By.id("otraNacionalidadNo" )).click();} else  {resultadoActual= true; }
-        if (!btnContinuar.isEnabled()) {driver.findElement(By.name("email")).sendKeys("t@mail.cl");} else  {resultadoActual= true; }
-        if (!btnContinuar.isEnabled()) {driver.findElement(By.name("celular")).sendKeys("999999999");} else  {resultadoActual= true; }
+         resultadoActual =btnContinuar.isEnabled();
 
+
+     //   if (!btnContinuar.isEnabled()) {  txtIngresoRut.sendKeys("12646609-9"); } else  {resultadoActual= true; }
+     //   if (!btnContinuar.isEnabled()) {  txtIngresoRut.sendKeys("12646609-9")).click();} else  {resultadoActual= true; }
+     //   if (!btnContinuar.isEnabled()) {   txtIngresoRut.sendKeys("12646609-9"} else  {resultadoActual= true; }
+    //    if (!btnContinuar.isEnabled()) {driver.findElement(By.name("email")).sendKeys("t@mail.cl");} else  {resultadoActual= true; }
+    //    if (!btnContinuar.isEnabled()) {driver.findElement(By.name("celular")).sendKeys("999999999");} else  {resultadoActual= true; }
+        txtIngresoRut.sendKeys("12646609-9");
+         driver.findElement(By.name("email")).sendKeys("t@mail.cl");
+        driver.findElement(By.name("celular")).sendKeys("999999999");
+        driver.findElement(By.id("nacionalidadChileno")).click();
+        driver.findElement(By.id("otraNacionalidadNo" )).click();
+        Thread.sleep(2000); //ESPERA 3 SEGUNDOS
         resultadoActual =btnContinuar.isEnabled();
 
         Assertions.assertEquals(resultadoEsperado,resultadoActual);
 
     }
-
+/*
     @Test
     void validaMensajesTextBoxVacios() throws InterruptedException {
 // ingreso a pagina principal de sitio consorcio
@@ -135,8 +179,10 @@ public class TestCaseTarea1 {
         Assertions.assertEquals(resultadoEsperado,resultadoActual);
 //webElement.sendKeys(Keys.TAB);
     }
+*/
+    void ingresoclienteSinCuenta() throws InterruptedException {
 
-
+    }
 
 
 
