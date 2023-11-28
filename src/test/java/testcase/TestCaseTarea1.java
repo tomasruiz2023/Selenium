@@ -21,7 +21,7 @@ public class TestCaseTarea1 {
     @BeforeEach
     public void preCondiciones(){
         //String ruta del driver
-        String rutaDriver = "D:\\QA\\_CAPACITACION_BANCO\\Java\\SeleniumTarea1\\src\\test\\resources\\driver\\chromedriver.exe";
+        String rutaDriver = "D:\\Java\\CursoSelenium\\EjerciciosSelenium1\\src\\test\\resources\\driver\\chromedriver.exe";
 
         //Enlazar el driver como property de windows para el manejo
         //Del navegador
@@ -87,14 +87,14 @@ public class TestCaseTarea1 {
 
     @Test
     void ingresoClienteExistenteFuncionario() throws InterruptedException {
-/*
+
         WebElement btnPortate = driver.findElement(By.id("hi_header_login_a"));
         WebElement btnHazteCliente = driver.findElement(By.id("header_hazte_cliente_banco"));
 
         btnPortate.click();
         if (btnHazteCliente.isDisplayed())
             btnHazteCliente.click();
-*/
+
 
         WebElement txtIngresoRut = driver.findElement(By.name("rut"));
         WebElement txtCelular = driver.findElement(By.name("celular"));
@@ -103,7 +103,7 @@ public class TestCaseTarea1 {
     //    txtIngresoRut.sendKeys(TAB);
         driver.findElement(By.id("nacionalidadChileno")).click();
         driver.findElement(By.id("otraNacionalidadNo" )).click();
-
+    // realiza scroll
         JavascriptExecutor jse = (JavascriptExecutor)driver;
         jse.executeScript("window.scrollBy(0,400)");
 
@@ -111,29 +111,22 @@ public class TestCaseTarea1 {
         driver.findElement(By.name("email")).sendKeys("t@mail.cl");
        // driver.findElement(By.name("celular")).sendKeys("999999999");
         txtCelular.sendKeys("999999999");
+       //envia una tabulador para avanzar
         txtCelular.sendKeys(TAB);
 
-
-        //driver.findElement(By.xpath("//cns-button[@label='Continuar']")).click();
-
-       // Thread.sleep(2000); //delay en milisegundos
-
-
         WebElement btnContinuar = driver.findElement(By.id("step1_btn"));
-
+        // presiona botón continuar, ahora le cambiaron de nombre
         btnContinuar.click();
 
-     //   if (btnContinuar.isEnabled()){
-     //       btnContinuar.click();
-     //   }
-
-
+       Thread.sleep(4000); //delay en milisegundos para esperar mensaje emergente
 
         //WebElement btnIrConsorcio = driver.findElement(By.xpath("//cns-button[@label='Ir a Consorcio.cl']"));
-        String resultadoActual = corregirFormatoTexto(driver.findElement(By.className("title")).getText());
+        // busca titulo para realizar comparacion
+        String resultadoActual;
+        resultadoActual = corregirFormatoTexto(driver.findElement(By.className("title")).getText());
         String resultadoEsperado = "¡Eres funcionario de Consorcio!";
 
-
+//  establece resultado del test.
         Assertions.assertEquals(resultadoEsperado,resultadoActual);
 
     }
@@ -162,7 +155,7 @@ public class TestCaseTarea1 {
         driver.findElement(By.name("celular")).sendKeys("999999999");
         driver.findElement(By.id("nacionalidadChileno")).click();
         driver.findElement(By.id("otraNacionalidadNo" )).click();
-        Thread.sleep(2000); //ESPERA 3 SEGUNDOS
+        Thread.sleep(2000); //ESPERA x SEGUNDOS
         resultadoActual =btnContinuar.isEnabled();
 
         Assertions.assertEquals(resultadoEsperado,resultadoActual);
