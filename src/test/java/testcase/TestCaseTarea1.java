@@ -41,72 +41,101 @@ public class TestCaseTarea1 {
     @AfterEach
     public void posCondiciones(){
         //pos condicion
-      //  driver.quit();
+       driver.quit();
     }
- /*
+
+
     @Test
     void ingresoClienteExistente() throws InterruptedException {
+        // cliente ya tiene cuenta vista, cliente no es funcionario
 
-        WebElement btnPortate = driver.findElement(By.id("hi_header_login_a"));
-        WebElement btnHazteCliente = driver.findElement(By.id("header_hazte_cliente_banco"));
-
-        btnPortate.click();
-        if (btnHazteCliente.isDisplayed())
-            btnHazteCliente.click();
-
-
-
-        WebElement btnContinuar = driver.findElement(By.id("step1_btn"));
         WebElement txtIngresoRut = driver.findElement(By.name("rut"));
+        WebElement txtCelular = driver.findElement(By.name("celular"));
+        WebElement btnContinuar = driver.findElement(By.id("step1_btn"));
+
         txtIngresoRut.sendKeys("14270952-K");
-        driver.findElement(By.name("email")).sendKeys("t@mail.cl");
-        driver.findElement(By.name("celular")).sendKeys("999999999");
+        txtIngresoRut.sendKeys(TAB);
         driver.findElement(By.id("nacionalidadChileno")).click();
         driver.findElement(By.id("otraNacionalidadNo" )).click();
-        Thread.sleep(2000); //ESPERA 3 SEGUNDOS
+        // realiza scroll para llenar formulario
+        JavascriptExecutor jse = (JavascriptExecutor)driver;
+        jse.executeScript("window.scrollBy(0,400)");
 
 
+        driver.findElement(By.name("email")).sendKeys("t@mail.cl");
+        // driver.findElement(By.name("celular")).sendKeys("999999999");
+        txtCelular.sendKeys("999999999");
+        //envia una tabulador para avanzar, sino pagina no avanza
+        txtCelular.sendKeys(TAB);
+
+        // presiona botón continuar, ahora le cambiaron de nombre
+        btnContinuar.click();
+
+        Thread.sleep(4000); //delay en milisegundos para esperar mensaje emergente
+
+        // busca titulo para realizar comparacion
         String resultadoActual = corregirFormatoTexto(driver.findElement(By.className("title")).getText());
-        //<div data-v-992f5938="" class="title">Ya tienes una cuenta vista vigente</div>
-
         String resultadoEsperado = "Ya tienes una cuenta vista vigente";
-        Thread.sleep(2000); //ESPERA xx SEGUNDOS
-        if(resultadoEsperado == resultadoActual){
-            // System.out.println("existe boton");
-          //  btnContinuar.click();
-
-         }
 
             // si resultado esperado es igual a resultado obtenido pasa la prueba
             Assertions.assertEquals(resultadoEsperado,resultadoActual);
 
     }
-*/
 
+
+    @Test
+    void ingresoClienteExistenteNuevo() throws InterruptedException {
+
+        WebElement txtIngresoRut = driver.findElement(By.name("rut"));
+        WebElement txtCelular = driver.findElement(By.name("celular"));
+
+        txtIngresoRut.sendKeys("5311470-9");
+        //    txtIngresoRut.sendKeys(TAB);
+        driver.findElement(By.id("nacionalidadChileno")).click();
+        driver.findElement(By.id("otraNacionalidadNo" )).click();
+        // realiza scroll
+        JavascriptExecutor jse = (JavascriptExecutor)driver;
+        jse.executeScript("window.scrollBy(0,400)");
+
+
+        driver.findElement(By.name("email")).sendKeys("t@mail.cl");
+        // driver.findElement(By.name("celular")).sendKeys("999999999");
+        txtCelular.sendKeys("999999999");
+        //envia una tabulador para avanzar
+        txtCelular.sendKeys(TAB);
+
+        WebElement btnContinuar = driver.findElement(By.id("step1_btn"));
+        // presiona botón continuar, ahora le cambiaron de nombre
+        btnContinuar.click();
+
+        Thread.sleep(4000); //delay en milisegundos para esperar mensaje emergente
+
+        //WebElement btnIrConsorcio = driver.findElement(By.xpath("//cns-button[@label='Ir a Consorcio.cl']"));
+        // busca titulo  de pagina siguiente para realizar comparacion
+        // si avanza al siguiente paso la prueba aprobó
+        String resultadoActual;
+        resultadoActual = corregirFormatoTexto(driver.getCurrentUrl());
+        String resultadoEsperado = "https://sitio.consorcio.cl/banca-personas/cuenta-vista/cuenta-mas-digital/step-2";
+
+//  establece resultado del test.
+        Assertions.assertEquals(resultadoEsperado,resultadoActual);
+
+    }
 
 
     @Test
     void ingresoClienteExistenteFuncionario() throws InterruptedException {
 
-        WebElement btnPortate = driver.findElement(By.id("hi_header_login_a"));
-        WebElement btnHazteCliente = driver.findElement(By.id("header_hazte_cliente_banco"));
-
-        btnPortate.click();
-        if (btnHazteCliente.isDisplayed())
-            btnHazteCliente.click();
-
-
         WebElement txtIngresoRut = driver.findElement(By.name("rut"));
         WebElement txtCelular = driver.findElement(By.name("celular"));
 
         txtIngresoRut.sendKeys("12646609-9");
-    //    txtIngresoRut.sendKeys(TAB);
+        txtIngresoRut.sendKeys(TAB);
         driver.findElement(By.id("nacionalidadChileno")).click();
         driver.findElement(By.id("otraNacionalidadNo" )).click();
     // realiza scroll
         JavascriptExecutor jse = (JavascriptExecutor)driver;
         jse.executeScript("window.scrollBy(0,400)");
-
 
         driver.findElement(By.name("email")).sendKeys("t@mail.cl");
        // driver.findElement(By.name("celular")).sendKeys("999999999");
@@ -122,8 +151,7 @@ public class TestCaseTarea1 {
 
         //WebElement btnIrConsorcio = driver.findElement(By.xpath("//cns-button[@label='Ir a Consorcio.cl']"));
         // busca titulo para realizar comparacion
-        String resultadoActual;
-        resultadoActual = corregirFormatoTexto(driver.findElement(By.className("title")).getText());
+        String resultadoActual = corregirFormatoTexto(driver.findElement(By.className("title")).getText());
         String resultadoEsperado = "¡Eres funcionario de Consorcio!";
 
 //  establece resultado del test.
@@ -131,16 +159,10 @@ public class TestCaseTarea1 {
 
     }
 
- /*
+
     @Test
     void validaActivacionBoton() throws InterruptedException {
-// ingreso a pagina principal de sitio consorcio
-        WebElement btnPortate = driver.findElement(By.id("hi_header_login_a"));
-        WebElement btnHazteCliente = driver.findElement(By.id("header_hazte_cliente_banco"));
 
-                btnPortate.click();
-        if (btnHazteCliente.isDisplayed())
-            btnHazteCliente.click();
 // en página siguiente, valida que botón está deshabilitado.
         boolean resultadoActual;
         boolean resultadoEsperado = true;
@@ -151,10 +173,16 @@ public class TestCaseTarea1 {
 
 
         txtIngresoRut.sendKeys("12646609-9");
-         driver.findElement(By.name("email")).sendKeys("t@mail.cl");
-        driver.findElement(By.name("celular")).sendKeys("999999999");
+        txtIngresoRut.sendKeys(TAB);
         driver.findElement(By.id("nacionalidadChileno")).click();
         driver.findElement(By.id("otraNacionalidadNo" )).click();
+        // realiza scroll
+        JavascriptExecutor jse = (JavascriptExecutor)driver;
+        jse.executeScript("window.scrollBy(0,400)");
+
+         driver.findElement(By.name("email")).sendKeys("t@mail.cl");
+        driver.findElement(By.name("celular")).sendKeys("999999999");
+
         Thread.sleep(2000); //ESPERA x SEGUNDOS
         resultadoActual =btnContinuar.isEnabled();
 
@@ -163,18 +191,10 @@ public class TestCaseTarea1 {
     }
 
 
-
-
     @Test
     void validaMensajesTextBoxVacios() throws InterruptedException {
-// ingreso a pagina principal de sitio consorcio
-        WebElement btnPortate = driver.findElement(By.id("hi_header_login_a"));
-        WebElement btnHazteCliente = driver.findElement(By.id("header_hazte_cliente_banco"));
 
-        btnPortate.click();
-        if (btnHazteCliente.isDisplayed())
-            btnHazteCliente.click();
-// en página siguiente, valida que botón está deshabilitado.
+// en página siguiente, valida que botón está deshabilitado cuando no se completan los campos de Email y celular.
         boolean resultadoActual = false;
         boolean resultadoEsperado = false;
 
@@ -189,20 +209,9 @@ public class TestCaseTarea1 {
         txtIngresoEmail.sendKeys(TAB);
         txtIngresoCelular.sendKeys(TAB);
 
-
-
-
         Assertions.assertEquals(resultadoEsperado,resultadoActual);
-//webElement.sendKeys(Keys.TAB);
-    }
-
-    void ingresoclienteSinCuenta() throws InterruptedException {
 
     }
-*/
-
-
-
 
 
 
@@ -212,4 +221,6 @@ public class TestCaseTarea1 {
 
         return textoCorrejido;
     }
+
+
 }
